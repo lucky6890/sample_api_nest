@@ -12,7 +12,7 @@ const scrypt = promisify(_scrypt);
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService) {}
-  async signup(email: string, password: string) {
+  async signup(email: string, password: string, isAdmin: boolean) {
     const user = await this.usersService.find(email);
     if (user.length != 0) {
       throw new BadRequestException('Email in use already!');
@@ -24,7 +24,7 @@ export class AuthService {
 
     const result = `${salt}.${hash.toString('hex')}`;
 
-    const new_user = await this.usersService.create(email, result);
+    const new_user = await this.usersService.create(email, result, isAdmin);
 
     return new_user;
   }

@@ -7,8 +7,8 @@ import { User } from './user.entity';
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
-  create(email: string, password: string) {
-    const user = this.repo.create({ email, password });
+  create(email: string, password: string, isAdmin: boolean) {
+    const user = this.repo.create({ email, password, isAdmin });
 
     return this.repo.save(user);
   }
